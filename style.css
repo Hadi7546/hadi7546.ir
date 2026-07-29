@@ -1,14 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-
-@font-face {
-    font-family: "Web437 IBM EGA 8x14";
-    src: url("public/fonts/Web437IBMEGA8x14.woff") format("woff");
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-    -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: grayscale;
-}
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;1,400&display=swap");
 
 @font-face {
     font-family: "Gandom";
@@ -18,366 +8,993 @@
     font-display: swap;
 }
 
-body {
-    background-color: #fff;
-    color: #333;
-    font-family:
-        "VT323",
-        "Web437 IBM EGA 8x14",
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        Liberation Mono,
-        Courier New,
-        monospace;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    font-size: 1.4rem;
+/* ==========================================================================
+   Factorio GUI palette. Values follow the game's interface: recessed dark
+   panels, warm cream labels (#ffe6c0 is Factorio's default font colour) and
+   the hazard-concrete yellow used for warnings.
+   ========================================================================== */
+
+:root {
+    --fc-void: #1a1918;
+    --fc-backdrop: #232221;
+
+    --fc-frame-top: #514f4c;
+    --fc-frame-mid: #434240;
+    --fc-frame-bot: #3a3937;
+    --fc-frame-edge: #161514;
+
+    --fc-deep-top: #222120;
+    --fc-deep-bot: #2b2a29;
+
+    --fc-slot-top: #3d3b39;
+    --fc-slot-bot: #323130;
+
+    --fc-btn-top: #66635e;
+    --fc-btn-mid: #4c4a47;
+    --fc-btn-bot: #3f3d3b;
+
+    --fc-text: #ffe6c0;
+    --fc-text-dim: #bdb099;
+    --fc-text-mute: #8d8577;
+
+    --fc-orange: #ffb14a;
+    --fc-orange-deep: #e08a17;
+    --fc-hazard: #c9a227;
+    --fc-green: #6bbf4a;
+    --fc-red: #ff6b5b;
+
+    --fc-radius: 4px;
 }
 
-.age-hover {
-    text-decoration: underline dotted;
-    text-underline-offset: 2px;
-}
-
-.music-player {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-}
-
-.music-toggle {
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background-color 0.2s;
-}
-
-.music-toggle:hover {
-    background-color: #f0f0f0;
-}
-
-.music-toggle svg {
-    fill: #333;
-    width: 18px;
-    height: 18px;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+* {
     box-sizing: border-box;
 }
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    border: 2px solid #ccc;
-    padding: 8px;
+html {
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    padding: 24px 16px 48px;
+    min-height: 100vh;
+    color: var(--fc-text-dim);
+    background-color: var(--fc-backdrop);
+    background-image:
+        radial-gradient(
+            ellipse 90% 60% at 50% -10%,
+            rgba(255, 177, 74, 0.07),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 120% 90% at 50% 40%,
+            rgba(0, 0, 0, 0) 40%,
+            rgba(0, 0, 0, 0.55) 100%
+        ),
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.022) 0 1px,
+            transparent 1px 32px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.022) 0 1px,
+            transparent 1px 32px
+        ),
+        repeating-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.012) 0 2px,
+            transparent 2px 5px
+        );
+    background-attachment: fixed;
+    font-family:
+        "Titillium Web",
+        "Segoe UI",
+        Tahoma,
+        Verdana,
+        sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background-color: var(--fc-orange-deep);
+    color: #241c0d;
+}
+
+:focus-visible {
+    outline: 2px solid var(--fc-orange);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Window frame
+   ========================================================================== */
+
+.container {
     position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 10px 12px 14px;
+    border: 1px solid var(--fc-frame-edge);
+    border-radius: var(--fc-radius);
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-frame-top) 0%,
+        var(--fc-frame-mid) 40%,
+        var(--fc-frame-bot) 100%
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 1px 0 0 rgba(255, 255, 255, 0.06),
+        inset -1px 0 0 rgba(0, 0, 0, 0.35),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.4),
+        0 3px 0 rgba(0, 0, 0, 0.3),
+        0 14px 34px rgba(0, 0, 0, 0.5);
+}
+
+/* Rivets, the way every Factorio machine casing wears them. */
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 2px;
+    pointer-events: none;
+    background-image:
+        radial-gradient(
+            circle at 3px 3px,
+            rgba(255, 255, 255, 0.16) 0 1.4px,
+            rgba(0, 0, 0, 0.4) 1.4px 2.4px,
+            transparent 2.6px
+        ),
+        radial-gradient(
+            circle at calc(100% - 3px) 3px,
+            rgba(255, 255, 255, 0.16) 0 1.4px,
+            rgba(0, 0, 0, 0.4) 1.4px 2.4px,
+            transparent 2.6px
+        ),
+        radial-gradient(
+            circle at 3px calc(100% - 3px),
+            rgba(255, 255, 255, 0.16) 0 1.4px,
+            rgba(0, 0, 0, 0.4) 1.4px 2.4px,
+            transparent 2.6px
+        ),
+        radial-gradient(
+            circle at calc(100% - 3px) calc(100% - 3px),
+            rgba(255, 255, 255, 0.16) 0 1.4px,
+            rgba(0, 0, 0, 0.4) 1.4px 2.4px,
+            transparent 2.6px
+        );
+}
+
+.fc-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 2px 4px 8px;
+}
+
+/* The dotted drag handle every draggable Factorio frame wears. */
+.fc-titlebar-spacer,
+.fc-drag-handle {
+    flex: 1;
+    align-self: center;
+    min-width: 24px;
+    height: 12px;
+    background-image: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.15) 0 1px,
+        rgba(0, 0, 0, 0.35) 1px 1.6px,
+        transparent 1.8px
+    );
+    background-size: 6px 6px;
+    background-position: center;
+}
+
+.fc-title,
+.name,
+.page-title {
+    margin: 0;
+    font-family: inherit;
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--fc-text);
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
+}
+
+.fc-separator {
+    height: 2px;
+    margin: 0 -12px 12px;
+    background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.55) 0 1px,
+        rgba(255, 255, 255, 0.09) 1px 2px
+    );
+}
+
+/* Hazard concrete, for the top edge of the window and for warnings. */
+.fc-hazard {
+    height: 8px;
+    margin: -10px -12px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 3px 3px 0 0;
+    background-image: repeating-linear-gradient(
+        -45deg,
+        var(--fc-hazard) 0 10px,
+        #2a2926 10px 20px
+    );
+    box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* ==========================================================================
+   Recessed panels and subheaders
+   ========================================================================== */
+
+.header-section,
+.content-section,
+.activity-section,
+.fc-deep {
+    position: relative;
+    padding: 16px 18px;
+    border: 1px solid #131211;
+    border-radius: 3px;
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-deep-top) 0%,
+        var(--fc-deep-bot) 100%
+    );
+    box-shadow:
+        inset 0 2px 7px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(0, 0, 0, 0.7),
+        0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .header-section {
-    li {
-        padding: 1px;
-    }
-
-    display: block;
-    padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 2px solid #ccc;
-    border-radius: 0;
-    background-color: #fff;
-    position: relative;
-}
-
-.image-box {
-    border-radius: 0;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: #fff;
-    max-width: 85%;
-}
-
-.image {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    display: block;
-    image-rendering: pixelated;
-}
-
-.name-intro {
-    margin-top: 10px;
-}
-
-.name {
-    font-size: 34px;
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-    color: #333;
-}
-
-.intro-text {
-    flex: 1;
-}
-
-.content-section {
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 0;
-
-    background-color: #fff;
+    margin: 0 0 12px;
 }
 
 .activity-section {
-    padding: 20px;
-    border: 2px solid #ccc;
-    background-color: #fff;
-    margin-top: 20px;
+    margin-bottom: 12px;
 }
 
-.activity-header {
+.container > *:last-child {
+    margin-bottom: 0;
+}
+
+.fc-subheader {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin: 0 -18px 14px;
+    padding: 5px 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    background-image: linear-gradient(180deg, #4a4845 0%, #3b3a38 100%);
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fc-text);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
 }
 
-.lastfm-track {
-    margin-top: 10px;
+.fc-subheader::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.55);
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-orange) 0%,
+        var(--fc-orange-deep) 100%
+    );
+    box-shadow: 0 0 6px rgba(255, 177, 74, 0.5);
 }
 
-.track-info {
+.fc-subheader b,
+.fc-subheader strong {
+    font-weight: 600;
+}
+
+.fc-subheader + * {
+    margin-top: 0;
+}
+
+.fc-subheader:not(:first-child) {
+    margin-top: 22px;
+}
+
+/* ==========================================================================
+   Item slots
+   ========================================================================== */
+
+.fc-slot {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: 1px solid #171615;
+    border-radius: 3px;
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-slot-top) 0%,
+        var(--fc-slot-bot) 100%
+    );
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.fc-profile {
     display: flex;
     align-items: flex-start;
-    gap: 15px;
+    gap: 16px;
+    min-width: 0;
+    margin-bottom: 4px;
+}
+
+.fc-slot--avatar {
+    margin-top: 2px;
+}
+
+.image {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+/* ==========================================================================
+   Buttons and tabs
+   ========================================================================== */
+
+.fc-btn,
+.home-link,
+.post-back-button,
+.music-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border: 1px solid #171615;
+    border-radius: 3px;
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-btn-top) 0%,
+        var(--fc-btn-mid) 45%,
+        var(--fc-btn-bot) 100%
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.4),
+        0 2px 0 rgba(0, 0, 0, 0.4);
+    color: var(--fc-text);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+    transition:
+        filter 0.1s ease,
+        transform 0.05s ease;
+}
+
+.fc-btn:hover,
+.home-link:hover,
+.post-back-button:hover,
+.music-toggle:hover {
+    filter: brightness(1.22);
+    border-color: #6d6558;
+    color: var(--fc-text);
+}
+
+.fc-btn:active,
+.home-link:active,
+.post-back-button:active,
+.music-toggle:active,
+.music-toggle.is-playing {
+    transform: translateY(1px);
+    background-image: linear-gradient(180deg, #35342f 0%, #43413c 100%);
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.6),
+        0 0 0 rgba(0, 0, 0, 0);
+    color: var(--fc-orange);
+}
+
+.fc-icon-btn,
+.music-toggle,
+.post-back-button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    flex: none;
+}
+
+.music-player {
+    display: flex;
+    flex: none;
+}
+
+.music-toggle svg,
+.fc-icon-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.music-toggle.is-playing svg {
+    filter: drop-shadow(0 0 4px rgba(255, 177, 74, 0.7));
+}
+
+/* Factorio tab strip: tabs sit on top of the panel that follows them. */
+.fc-tabs {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin: 0 0 -1px 2px;
+}
+
+.fc-tab {
+    padding: 5px 16px 6px;
+    border: 1px solid #171615;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    background-image: linear-gradient(180deg, #4f4d49 0%, #3c3b38 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset -1px 0 0 rgba(0, 0, 0, 0.3);
+    color: var(--fc-text);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+    transition: filter 0.1s ease;
+}
+
+.fc-tab:hover {
+    filter: brightness(1.25);
+    color: var(--fc-orange);
+}
+
+.fc-tab[aria-current="page"] {
+    padding-bottom: 8px;
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-deep-top) 0%,
+        var(--fc-deep-bot) 100%
+    );
+    box-shadow:
+        inset 0 2px 0 var(--fc-orange-deep),
+        inset -1px 0 0 rgba(0, 0, 0, 0.3);
+    color: var(--fc-orange);
+}
+
+.fc-tab[aria-current="page"]:hover {
+    filter: none;
+}
+
+/* ==========================================================================
+   Text, links, lists
+   ========================================================================== */
+
+p {
+    margin: 0 0 0.9rem;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+b,
+strong {
+    color: var(--fc-text);
+    font-weight: 600;
+}
+
+a {
+    color: var(--fc-orange);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(255, 177, 74, 0.5);
+}
+
+a:hover {
+    color: #ffd08a;
+    border-bottom-color: currentColor;
+}
+
+.fc-btn,
+.fc-tab,
+.home-link,
+.post-back-button,
+.fc-list-box a,
+.fc-grid a {
+    border-bottom-style: solid;
+}
+
+ul {
+    margin: 0 0 0.6rem;
+    padding: 0;
+    list-style: none;
+}
+
+ul:last-child {
+    margin-bottom: 0;
+}
+
+li {
+    padding: 3px 0;
+}
+
+/* Plain bullet lists get Factorio's small square marker. */
+.fc-list li {
+    position: relative;
+    padding-left: 20px;
+}
+
+.fc-list li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0.62em;
+    width: 7px;
+    height: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    background-image: linear-gradient(180deg, #cfc4ae 0%, #8f887a 100%);
+}
+
+/* A list_box, like the mod / save-game lists in game. */
+.fc-list-box {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 4px;
+    border: 1px solid #131211;
+    border-radius: 3px;
+    background-image: linear-gradient(180deg, #1d1c1b 0%, #262524 100%);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.fc-list-box li {
+    padding: 0;
+}
+
+.fc-list-box a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: var(--fc-text-dim);
+    font-weight: 400;
+    transition:
+        background-color 0.1s ease,
+        color 0.1s ease;
+}
+
+.fc-list-box a::before {
+    content: "";
+    flex: none;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid rgba(255, 230, 192, 0.35);
+}
+
+.fc-list-box a:hover {
+    background-color: rgba(255, 177, 74, 0.13);
+    border-color: rgba(255, 177, 74, 0.35);
+    color: var(--fc-text);
+}
+
+.fc-list-box a:hover::before {
+    border-left-color: var(--fc-orange);
+}
+
+/* Button grid, like the shortcut bar. */
+.fc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 6px;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.fc-grid li {
+    padding: 0;
+    display: flex;
+}
+
+.fc-grid a {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    border: 1px solid #171615;
+    border-radius: 3px;
+    background-image: linear-gradient(
+        180deg,
+        var(--fc-btn-top) 0%,
+        var(--fc-btn-mid) 45%,
+        var(--fc-btn-bot) 100%
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.4),
+        0 2px 0 rgba(0, 0, 0, 0.35);
+    color: var(--fc-text);
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+    transition:
+        filter 0.1s ease,
+        transform 0.05s ease;
+}
+
+.fc-grid a:hover {
+    filter: brightness(1.25);
+    border-color: #6d6558;
+    color: var(--fc-orange);
+}
+
+.fc-grid a:active {
+    transform: translateY(1px);
+}
+
+.age-hover {
+    color: var(--fc-text);
+    border-bottom: 1px dashed rgba(255, 177, 74, 0.6);
+    font-variant-numeric: tabular-nums;
+    cursor: help;
+}
+
+/* ==========================================================================
+   Transport belt, used as a divider
+   ========================================================================== */
+
+.fc-belt {
+    height: 20px;
+    margin-top: 12px;
+    border: 1px solid #171615;
+    border-radius: 3px;
+    background-color: #35342f;
+    background-image:
+        repeating-linear-gradient(
+            115deg,
+            rgba(255, 255, 255, 0.22) 0 2px,
+            rgba(255, 255, 255, 0.06) 2px 4px,
+            rgba(0, 0, 0, 0.45) 4px 6px,
+            rgba(0, 0, 0, 0) 6px 13.245px
+        ),
+        linear-gradient(
+            180deg,
+            #c9a227 0 3px,
+            #57544c 3px 5px,
+            #3c3b36 5px calc(100% - 5px),
+            #57544c calc(100% - 5px) calc(100% - 3px),
+            #c9a227 calc(100% - 3px) 100%
+        );
+    background-repeat: repeat-x, repeat;
+    background-size:
+        100% calc(100% - 10px),
+        100% 100%;
+    background-position:
+        0 5px,
+        0 0;
+    box-shadow:
+        inset 0 0 10px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    animation: fc-belt-run 0.85s linear infinite;
+}
+
+@keyframes fc-belt-run {
+    to {
+        background-position:
+            26.49px 5px,
+            0 0;
+    }
+}
+
+/* ==========================================================================
+   Progress bars
+   ========================================================================== */
+
+.fc-bar {
+    position: relative;
+    overflow: hidden;
+    height: 12px;
+    border: 1px solid #131211;
+    border-radius: 2px;
+    background-image: linear-gradient(180deg, #1b1a19 0%, #262524 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.fc-bar-fill {
+    height: 100%;
+    background-image: linear-gradient(
+        180deg,
+        #ffd07a 0 1px,
+        var(--fc-orange) 1px 55%,
+        var(--fc-orange-deep) 100%
+    );
+    box-shadow: 0 0 8px rgba(255, 177, 74, 0.45);
+}
+
+.fc-bar--green .fc-bar-fill {
+    background-image: linear-gradient(
+        180deg,
+        #a9e389 0 1px,
+        var(--fc-green) 1px 55%,
+        #3f8c2a 100%
+    );
+    box-shadow: 0 0 8px rgba(107, 191, 74, 0.4);
+}
+
+.fc-bar--busy .fc-bar-fill {
+    width: 34%;
+    animation: fc-bar-scan 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes fc-bar-scan {
+    from {
+        margin-left: 0;
+    }
+    to {
+        margin-left: 66%;
+    }
+}
+
+.loading {
+    padding: 6px 0 2px;
+    color: var(--fc-text-mute);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 107, 91, 0.4);
+    border-radius: 3px;
+    background-color: rgba(255, 107, 91, 0.1);
+    color: var(--fc-red);
+    font-weight: 600;
+}
+
+/* Factorio's alert glyph: a yellow warning sign. */
+.error::before {
+    content: "\26A0";
+    flex: none;
+    color: #e5b53d;
+    font-size: 1.15rem;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
+   Activity readouts
+   ========================================================================== */
+
+.lastfm-track,
+.github-commit,
+.monkeytype-test {
+    margin-top: 4px;
+}
+
+.track-info,
+.commit-info,
+.test-info {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
     flex-wrap: nowrap;
 }
 
 .album-cover {
-    width: 140px;
-    height: 140px;
+    display: block;
+    width: 116px;
+    height: 116px;
     object-fit: cover;
-    border-radius: 0;
-    flex-shrink: 0;
-    image-rendering: pixelated;
+    flex: none;
+    border: 1px solid #171615;
+    border-radius: 3px;
+    background-color: var(--fc-slot-bot);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.track-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-    overflow: hidden;
-}
-
-.track-name {
-    font-weight: bold;
-    font-size: 22px;
-    line-height: 1.3;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.artist-name {
-    font-size: 20px;
-    color: #666;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.album-name {
-    font-size: 20px;
-    color: #666;
-    font-style: italic;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.play-date {
-    font-size: 16px;
-    color: #999;
-    margin-top: 3px;
-}
-
-.loading,
-.error {
-    padding: 20px;
-    text-align: center;
-    color: #666;
-    font-style: italic;
-}
-
-.error {
-    color: #d73a49;
-}
-
-li {
-    padding: 5px 0;
-}
-
-.github-commit {
-    margin-top: 10px;
-}
-
-.commit-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-}
-
-.commit-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.commit-message {
-    font-weight: bold;
-    font-size: 22px;
-    line-height: 1.3;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.commit-repo {
-    font-size: 20px;
-    color: #666;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.commit-date {
-    font-size: 16px;
-    color: #999;
-    margin-top: 8px;
-}
-
-.monkeytype-test {
-    margin-top: 10px;
-}
-
-.test-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-}
-
+.track-details,
+.commit-details,
 .test-details {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
+    min-width: 0;
+    overflow: hidden;
 }
 
+.track-name,
+.commit-message,
 .test-wpm {
-    font-weight: bold;
-    font-size: 22px;
+    color: var(--fc-text);
+    font-size: 1.15rem;
+    font-weight: 600;
     line-height: 1.3;
+    overflow-wrap: break-word;
 }
 
-.test-accuracy {
-    font-size: 20px;
-    color: #666;
+.track-name,
+.commit-message {
+    border-bottom: none;
+    color: var(--fc-orange);
 }
 
-.test-mode {
-    font-size: 20px;
-    color: #666;
-    font-style: italic;
-}
-
-.test-date {
-    font-size: 16px;
-    color: #999;
-    margin-top: 8px;
-}
-
-.bright-date {
-    color: #555 !important;
-    font-weight: 500;
-}
-
-.page-header {
-    text-align: center;
-    border: 2px solid #ccc;
-    background-color: #fff;
-}
-
-.page-title {
-    font-size: 72px;
-    margin: 0;
-    font-weight: normal;
-    color: #333;
-}
-
-.error-message {
-    font-size: 24px;
-    color: #666;
-    margin-top: 10px;
-}
-
-.home-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: 2px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    text-decoration: none;
-    font-size: 20px;
-}
-
-.home-link:hover {
-    background-color: #f0f0f0;
-}
-
-.blog-post-item {
-    margin-bottom: 15px;
-}
-
-.blog-post-item a {
-    font-size: 22px;
-    color: #333;
-    text-decoration: none;
-}
-
-.blog-post-item a:hover {
+.track-name:hover,
+.commit-message:hover {
+    color: #ffd08a;
     text-decoration: underline;
 }
 
-.blog-post-date {
-    font-size: 16px;
-    color: #999;
-    margin-left: 10px;
+.artist-name,
+.album-name,
+.commit-repo,
+.test-accuracy,
+.test-mode {
+    color: var(--fc-text-dim);
+    font-size: 0.98rem;
+    overflow-wrap: break-word;
 }
+
+.album-name,
+.test-mode {
+    font-style: italic;
+}
+
+.play-date,
+.commit-date,
+.test-date {
+    margin-top: auto;
+    padding-top: 6px;
+    color: var(--fc-text-mute);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+}
+
+.bright-date {
+    color: var(--fc-text-dim) !important;
+}
+
+.test-wpm {
+    font-size: 1.6rem;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+.test-bar {
+    max-width: 320px;
+    margin: 4px 0 6px;
+}
+
+/* Now-playing gets the pulsing treatment Factorio uses for active machines. */
+.now-playing {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--fc-green) !important;
+    font-weight: 600;
+}
+
+.now-playing::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    background-color: var(--fc-green);
+    box-shadow: 0 0 6px var(--fc-green);
+    animation: fc-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes fc-pulse {
+    50% {
+        opacity: 0.35;
+        box-shadow: 0 0 2px var(--fc-green);
+    }
+}
+
+/* ==========================================================================
+   Page headers, 404, blog
+   ========================================================================== */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 2px 4px 8px;
+    border: none;
+    background: none;
+    box-shadow: none;
+    text-align: left;
+}
+
+.page-title {
+    font-size: 1.7rem;
+}
+
+.fc-title--huge {
+    font-size: 3.4rem;
+    letter-spacing: 0.06em;
+    color: var(--fc-orange);
+    text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.8),
+        0 0 26px rgba(255, 177, 74, 0.35);
+}
+
+.error-message {
+    color: var(--fc-text-dim);
+    font-size: 1rem;
+}
+
+.fc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.blog-post-item {
+    margin-bottom: 0;
+}
+
+.blog-post-date {
+    margin-left: auto;
+    padding-left: 12px;
+    color: var(--fc-text-mute);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+}
+
+.fc-empty {
+    padding: 18px;
+    border: 1px dashed rgba(255, 230, 192, 0.18);
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.25);
+    color: var(--fc-text-mute);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Blog post (RTL)
+   ========================================================================== */
 
 .persian-post {
     direction: rtl;
     text-align: right;
     font-family: "Gandom", Tahoma, Arial, sans-serif;
-    font-size: 1.08rem;
-    line-height: 2.1;
+    font-size: 1.05rem;
+    line-height: 2.05;
 }
 
 .persian-post .post-article {
@@ -385,25 +1002,22 @@ li {
 }
 
 .persian-post .post-header {
-    padding: 20px;
-    margin-top: 0;
+    display: block;
+    padding: 2px 4px 10px;
 }
 
 .persian-post .page-title {
     font-family: "Gandom", Tahoma, Arial, sans-serif;
-    font-size: 2.3rem;
+    font-size: 1.75rem;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .persian-post .post-description,
 .persian-post .post-meta {
-    color: #666;
-    margin: 8px 0 0;
-}
-
-.persian-post .post-content {
-    margin-top: 20px;
+    margin: 6px 0 0;
+    color: var(--fc-text-mute);
+    font-size: 0.95rem;
 }
 
 .persian-post .post-content p {
@@ -413,59 +1027,140 @@ li {
 .persian-post blockquote {
     direction: ltr;
     text-align: left;
-    font-family:
-        "VT323",
-        "Web437 IBM EGA 8x14",
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
-        Liberation Mono,
-        Courier New,
-        monospace;
-    font-size: 1.3rem;
-    line-height: 1.5;
     margin: 1.4rem 0;
-    padding: 0.5rem 0 0.5rem 1rem;
-    border-left: 4px solid #ccc;
-    color: #555;
+    padding: 12px 16px;
+    border: 1px solid #131211;
+    border-left: 4px solid var(--fc-orange-deep);
+    border-radius: 3px;
+    background-image: linear-gradient(180deg, #1d1c1b 0%, #262524 100%);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55);
+    color: var(--fc-text);
+    font-family:
+        "Titillium Web",
+        "Segoe UI",
+        Tahoma,
+        sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
 .persian-post blockquote p {
     margin: 0;
 }
 
-.post-back-nav {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 16px;
+.post-header .fc-titlebar {
+    align-items: flex-start;
+    padding: 0 0 6px;
 }
 
-.post-back-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: 2px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    text-decoration: none;
-    font-size: 1.3rem;
-    line-height: 1;
+.post-header .post-back-button {
+    margin-top: 2px;
 }
 
-.post-back-button:hover {
-    background-color: #f0f0f0;
+/* ==========================================================================
+   Scrollbar
+   ========================================================================== */
+
+* {
+    scrollbar-color: #5a5854 #1d1c1b;
 }
 
-@media (max-width: 600px) {
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1d1c1b;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+    border: 1px solid #171615;
+    border-radius: 2px;
+    background-image: linear-gradient(180deg, #63615d 0%, #45433f 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    filter: brightness(1.2);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    body {
+        padding: 12px 8px 32px;
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 8px 10px 12px;
+    }
+
+    .fc-hazard {
+        margin: -8px -10px 10px;
+    }
+
+    .fc-separator {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .header-section,
+    .content-section,
+    .activity-section,
+    .fc-deep {
+        padding: 14px;
+    }
+
+    .fc-subheader {
+        margin-left: -14px;
+        margin-right: -14px;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .post-header .fc-drag-handle {
+        display: none;
+    }
+
+    .fc-title,
+    .name,
+    .page-title {
+        font-size: 1.4rem;
+    }
+
+    .fc-title--huge {
+        font-size: 2.6rem;
+    }
+
+    .track-info,
+    .commit-info,
+    .test-info {
+        flex-wrap: wrap;
+    }
+
+    .album-cover {
+        width: 92px;
+        height: 92px;
+    }
+
     .persian-post {
         font-size: 1rem;
     }
 
     .persian-post .page-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fc-belt,
+    .fc-bar--busy .fc-bar-fill,
+    .now-playing::before {
+        animation: none;
     }
 }
