@@ -13,6 +13,7 @@
 
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#232221" />
         <link
             rel="icon"
             type="image/png"
@@ -28,9 +29,20 @@
     </head>
     <body>
         <div class="container">
+            <div class="fc-hazard" aria-hidden="true"></div>
+
             <div class="page-header">
                 <h1 class="page-title">Blog</h1>
+                <div class="fc-drag-handle" aria-hidden="true"></div>
             </div>
+
+            <div class="fc-separator" aria-hidden="true"></div>
+
+            <nav class="fc-tabs">
+                <a class="fc-tab" href="/">Home</a>
+                <a class="fc-tab" href="/activities">Activities</a>
+                <a class="fc-tab" href="/blog" aria-current="page">Blog</a>
+            </nav>
 
             <div class="header-section">
                 <div class="name-intro">
@@ -39,23 +51,23 @@
                         experiences, and thoughts on various topics including
                         programming, philosophy, and life in general.
                     </p>
-                    <p>
-                        <a href="/">← Back to home</a>
-                    </p>
                 </div>
             </div>
 
             <div class="content-section">
-                <h3>The garden is resting for now</h3>
+                <h3 class="fc-subheader">The garden is resting for now</h3>
                 <p>
                     The mind is a garden. Sometimes it's in full bloom, other
                     times it lies fallow, gathering strength for the next
                     season. Right now, my garden is resting. But new seeds are
                     always being sown.
                 </p>
-                <b>Latest Posts:</b>
-                <ul></ul>
+
+                <div class="fc-subheader"><b>Latest Posts:</b></div>
+                <div class="fc-empty">No posts yet.</div>
             </div>
+
+            <div class="fc-belt" aria-hidden="true"></div>
         </div>
     </body>
 </html>

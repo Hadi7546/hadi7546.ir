@@ -21,6 +21,7 @@
         <meta http-equiv="Cache-Control" content="no-cache" />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#232221" />
         
 	<link
             rel="icon"
@@ -37,26 +38,18 @@
         <script defer src="https://umami.okcomp.ir/script.js" data-website-id="61692dc3-fdbf-4f89-aba7-9c5ae665f835"></script>
     </head>
     <body>
-        <div class="container pixel-corner">
-            <div class="header-container">
-                <div class="image-box">
-                    <img
-                        class="image"
-                        src="public/images/pixelated-hadi-rmbg.png"
-                        alt="hadi's pic"
-                    />
-                    <div class="intro-text">
-                        <h1 class="name">Hadi Azarnasab</h1>
-                        <a href="/activities">Activities</a>
-                        •
-                        <a href="/blog">Blog</a>
-                    </div>
-                </div>
+        <div class="container">
+            <div class="fc-hazard" aria-hidden="true"></div>
+
+            <div class="fc-titlebar">
+                <h1 class="name">Hadi Azarnasab</h1>
+                <div class="fc-titlebar-spacer"></div>
                 <div class="music-player">
                     <button
                         id="music-toggle"
                         class="music-toggle"
                         title="Play/Pause Music"
+                        aria-label="Play/Pause Music"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -73,43 +66,65 @@
                 </div>
             </div>
 
-            <div class="header-section pixel-corner">
-                <div class="name-intro">
-                    <p>
-                        I'm Hadi, an
-                        <span class="age-hover" data-birthdate="2007-10-20">18</span>-year-old high school student who lives in
-                        Iran. I love learning cool concepts in computer science,
-                        math, physics, philosophy, and more. I also enjoy
-                        playing chess and reading. Right now, I'm focusing on my
-                        studies, learning Rust, and contributing to open-source
-                        projects.
-                    </p>
-                    <b>Facts about me:</b>
-                    <ul>
-                        <li>I listen to music a lot, big fan of Radiohead!</li>
-                        <li>
-                            I love communicating with people, talking with them,
-                            and listening to their stories.
-                        </li>
-                        <li>I like espresso.</li>
-                        <li>I use Arch with GNOME on an IdeaPad 5 15ITL05.</li>
-                    </ul>
-                    <p>
-                        Email:
-                        <a href="mailto:hi@hadi7546.ir" , target="_blank"
+            <div class="fc-separator" aria-hidden="true"></div>
+
+            <nav class="fc-tabs">
+                <a class="fc-tab" href="/" aria-current="page">Home</a>
+                <a class="fc-tab" href="/activities">Activities</a>
+                <a class="fc-tab" href="/blog">Blog</a>
+            </nav>
+
+            <div class="header-section">
+                <div class="fc-profile">
+                    <div class="fc-slot fc-slot--avatar">
+                        <img
+                            class="image"
+                            src="public/images/pixelated-hadi-rmbg.png"
+                            alt="hadi's pic"
+                        />
+                    </div>
+                    <div class="name-intro">
+                        <p>
+                            I'm Hadi, an
+                            <span class="age-hover" data-birthdate="2007-10-20">18</span>-year-old high school student who lives in
+                            Iran. I love learning cool concepts in computer
+                            science, math, physics, philosophy, and more. I also
+                            enjoy playing chess and reading. Right now, I'm
+                            focusing on my studies, learning Rust, and
+                            contributing to open-source projects.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="fc-subheader"><b>Facts about me:</b></div>
+                <ul class="fc-list">
+                    <li>I listen to music a lot, big fan of Radiohead!</li>
+                    <li>
+                        I love communicating with people, talking with them, and
+                        listening to their stories.
+                    </li>
+                    <li>I like espresso.</li>
+                    <li>I use Arch with GNOME on an IdeaPad 5 15ITL05.</li>
+                </ul>
+
+                <div class="fc-subheader"><b>Email:</b></div>
+                <ul class="fc-grid">
+                    <li>
+                        <a href="mailto:hi@hadi7546.ir" target="_blank"
                             >hi@hadi7546.ir</a
                         >
-                        or
-                        <a href="mailto:hazard7546@gmail.com" , target="_blank"
+                    </li>
+                    <li>
+                        <a href="mailto:hazard7546@gmail.com" target="_blank"
                             >hazard7546@gmail.com</a
                         >
-                    </p>
-                </div>
+                    </li>
+                </ul>
             </div>
 
             <div class="content-section">
-                <b>Cool stuff I do:</b>
-                <ul>
+                <div class="fc-subheader"><b>Cool stuff I do:</b></div>
+                <ul class="fc-list-box">
                     <li>
                         <a href="https://ganjoorak.ir" target="_blank"
                             >Building a modern platform to read and listen to
@@ -139,31 +154,26 @@
                     </li>
                 </ul>
 
-                <b>Find me on:</b>
-                <ul>
+                <div class="fc-subheader"><b>Find me on:</b></div>
+                <ul class="fc-grid">
                     <li>
-                        <a href="https://github.com/hadi7546" , target="_blank"
+                        <a href="https://github.com/hadi7546" target="_blank"
                             >Github</a
                         >
                     </li>
                     <li>
-                        <a href="https://t.me/hadi7546" , target="_blank"
+                        <a href="https://t.me/hadi7546" target="_blank"
                             >Telegram</a
                         >
                     </li>
-
                     <li>
-                        <a
-                            href="https://twitter.com/hadi_7546"
-                            ,
-                            target="_blank"
+                        <a href="https://twitter.com/hadi_7546" target="_blank"
                             >Twitter</a
                         >
                     </li>
                     <li>
                         <a
                             href="https://www.last.fm/user/hadi7546/"
-                            ,
                             target="_blank"
                             >Last.fm</a
                         >
@@ -171,7 +181,6 @@
                     <li>
                         <a
                             href="https://mastodon.social/@hadi7546"
-                            ,
                             target="_blank"
                             >Mastodon</a
                         >
@@ -179,13 +188,14 @@
                     <li>
                         <a
                             href="https://monkeytype.com/profile/hadi7546/"
-                            ,
                             target="_blank"
                             >Monkeytype</a
                         >
                     </li>
                 </ul>
             </div>
+
+            <div class="fc-belt" aria-hidden="true"></div>
         </div>
 
         <script src="script.js"></script>
