@@ -16,26 +16,26 @@
 
 :root {
     --fc-void: #1a1918;
-    --fc-backdrop: #232221;
+    --fc-backdrop: #2b2926;
 
-    --fc-frame-top: #514f4c;
-    --fc-frame-mid: #434240;
-    --fc-frame-bot: #3a3937;
-    --fc-frame-edge: #161514;
+    --fc-frame-top: #4c4a45;
+    --fc-frame-mid: #423f3b;
+    --fc-frame-bot: #3a3833;
+    --fc-frame-edge: #14130f;
 
-    --fc-deep-top: #222120;
-    --fc-deep-bot: #2b2a29;
+    --fc-deep-top: #201f1c;
+    --fc-deep-bot: #292722;
 
-    --fc-slot-top: #3d3b39;
-    --fc-slot-bot: #323130;
+    --fc-slot-top: #3b3934;
+    --fc-slot-bot: #302e2a;
 
-    --fc-btn-top: #66635e;
-    --fc-btn-mid: #4c4a47;
-    --fc-btn-bot: #3f3d3b;
+    --fc-btn-top: #605d56;
+    --fc-btn-mid: #514e48;
+    --fc-btn-bot: #45423c;
 
     --fc-text: #ffe6c0;
-    --fc-text-dim: #bdb099;
-    --fc-text-mute: #8d8577;
+    --fc-text-dim: #cdbfa4;
+    --fc-text-mute: #948b7c;
 
     --fc-orange: #ffb14a;
     --fc-orange-deep: #e08a17;
@@ -44,6 +44,85 @@
     --fc-red: #ff6b5b;
 
     --fc-radius: 4px;
+
+    /* The game's panels are visibly grainy, so every surface gets noise. */
+    --fc-grain: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23g)' opacity='0.24'/></svg>");
+    --fc-grain-soft: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23g)' opacity='0.13'/></svg>");
+    --fc-grain-floor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23g)' opacity='0.3'/></svg>");
+
+    /* Transport belt tiles: yellow rails and moving surface ridges. */
+    --fc-belt-tile: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='20'><rect width='16' height='20' fill='%233c3a34'/><path d='M2 0h5L5 20H0z' fill='%236e6b61'/><path d='M7 0h1.4L6.4 20H5z' fill='%23262420'/><rect y='0' width='16' height='3' fill='%23c9a227'/><rect y='2.4' width='16' height='0.8' fill='%23806418'/><rect y='17' width='16' height='3' fill='%23c9a227'/><rect y='16.6' width='16' height='0.8' fill='%23806418'/></svg>");
+    --fc-belt-tile-v: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='16'><rect width='20' height='16' fill='%233c3a34'/><path d='M0 2h20v5H0z' fill='%236e6b61'/><path d='M0 7h20v1.4H0z' fill='%23262420'/><rect width='3' height='16' fill='%23c9a227'/><rect x='2.4' width='0.8' height='16' fill='%23806418'/><rect x='17' width='3' height='16' fill='%23c9a227'/><rect x='16.6' width='0.8' height='16' fill='%23806418'/></svg>");
+}
+
+/* ==========================================================================
+   Item icons, drawn the way the game's sprites read at inventory size
+   ========================================================================== */
+
+:root {
+    --fc-icon-gear: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><g fill='%23918e86'><rect x='6.4' y='.6' width='3.2' height='14.8' rx='.4'/><rect x='.6' y='6.4' width='14.8' height='3.2' rx='.4'/><rect x='6.4' y='.6' width='3.2' height='14.8' rx='.4' transform='rotate(45 8 8)'/><rect x='6.4' y='.6' width='3.2' height='14.8' rx='.4' transform='rotate(-45 8 8)'/></g><circle cx='8' cy='8' r='6' fill='%239b9890'/><circle cx='8' cy='8' r='6' fill='none' stroke='%23c6c3ba' stroke-width='.8'/><circle cx='8' cy='8' r='2.4' fill='%23242220'/></svg>");
+    --fc-icon-belt: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='1' y='3' width='14' height='10' fill='%233c3b36' stroke='%23231f1c' stroke-width='.8'/><rect x='1.4' y='3.4' width='13.2' height='2' fill='%23c9a227'/><rect x='1.4' y='10.6' width='13.2' height='2' fill='%23c9a227'/><path d='M5.6 6.2l3.4 1.8-3.4 1.8z' fill='%23b6b3aa'/></svg>");
+    --fc-icon-chest: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='2' y='4' width='12' height='9' fill='%238a5a2b' stroke='%234a2f14' stroke-width='.8'/><rect x='2.4' y='4.4' width='11.2' height='2.2' fill='%23a9703a'/><rect x='7.2' y='6.6' width='1.6' height='6.2' fill='%235d3b1a'/></svg>");
+    --fc-icon-science: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M6.4 2.2h3.2v3.6l2.7 4.3a3.5 3.5 0 0 1-2.9 5.4H6.6a3.5 3.5 0 0 1-2.9-5.4l2.7-4.3z' fill='%23d9d5ca' stroke='%23231f1c' stroke-width='.8'/><path d='M4.1 9.9h7.8a3.6 3.6 0 0 1-3.9 5.2 3.6 3.6 0 0 1-3.9-5.2z' fill='%23c0392b'/></svg>");
+    --fc-icon-radar: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='6.6' y='7.6' width='2.8' height='5.4' fill='%236f6c64'/><rect x='4.2' y='12.6' width='7.6' height='1.8' fill='%235a5751' stroke='%23231f1c' stroke-width='.6'/><path d='M8 1.6a6.4 6.4 0 0 1 6.4 6.4H1.6A6.4 6.4 0 0 1 8 1.6z' fill='%23a3a099' stroke='%23231f1c' stroke-width='.8'/><path d='M8 3.8a4.2 4.2 0 0 1 4.2 4.2H3.8A4.2 4.2 0 0 1 8 3.8z' fill='%236f6c64'/></svg>");
+    --fc-icon-lamp: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='6.4' r='4.2' fill='%23ffd76a' stroke='%23231f1c' stroke-width='.8'/><circle cx='6.5' cy='5.2' r='1.2' fill='%23fff6d8'/><rect x='5.6' y='10.4' width='4.8' height='3.6' fill='%236f6c64' stroke='%23231f1c' stroke-width='.8'/></svg>");
+    --fc-icon-plate: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2 6.4l3.2-2.4h5.6L14 6.4v3.2l-3.2 2.4H5.2L2 9.6z' fill='%239b9890' stroke='%23231f1c' stroke-width='.8'/><path d='M4.6 6.9l1.8-1.3h3.2l1.8 1.3-1.8 1.3H6.4z' fill='%23c6c3ba'/></svg>");
+    --fc-icon-copper: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2 6.4l3.2-2.4h5.6L14 6.4v3.2l-3.2 2.4H5.2L2 9.6z' fill='%23c07a3c' stroke='%23231f1c' stroke-width='.8'/><path d='M4.6 6.9l1.8-1.3h3.2l1.8 1.3-1.8 1.3H6.4z' fill='%23e6a76b'/></svg>");
+    --fc-icon-machine: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='2' y='3' width='12' height='10' rx='1' fill='%238d8a82' stroke='%23231f1c' stroke-width='.8'/><rect x='2.6' y='3.6' width='10.8' height='1.8' fill='%23aaa79f'/><circle cx='8' cy='8.6' r='3' fill='%233f6f96'/><circle cx='8' cy='8.6' r='1.2' fill='%23cfe4f2'/></svg>");
+    --fc-icon-speaker: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='2' y='2.6' width='12' height='10.8' rx='1' fill='%236f6c64' stroke='%23231f1c' stroke-width='.8'/><circle cx='8' cy='8' r='3.4' fill='%232c2a26'/><circle cx='8' cy='8' r='1.4' fill='%23b6b3aa'/></svg>");
+}
+
+.fc-i-gear {
+    --fc-item: var(--fc-icon-gear);
+}
+
+.fc-i-belt {
+    --fc-item: var(--fc-icon-belt);
+}
+
+.fc-i-chest {
+    --fc-item: var(--fc-icon-chest);
+}
+
+.fc-i-science {
+    --fc-item: var(--fc-icon-science);
+}
+
+.fc-i-radar {
+    --fc-item: var(--fc-icon-radar);
+}
+
+.fc-i-lamp {
+    --fc-item: var(--fc-icon-lamp);
+}
+
+.fc-i-plate {
+    --fc-item: var(--fc-icon-plate);
+}
+
+.fc-i-copper {
+    --fc-item: var(--fc-icon-copper);
+}
+
+.fc-i-machine {
+    --fc-item: var(--fc-icon-machine);
+}
+
+.fc-i-speaker {
+    --fc-item: var(--fc-icon-speaker);
+}
+
+/* A small item icon that can ride inside a button, next to its label. */
+.fc-item {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #171615;
+    border-radius: 2px;
+    background:
+        var(--fc-item, none) center / 18px 18px no-repeat,
+        linear-gradient(180deg, var(--fc-slot-top) 0%, var(--fc-slot-bot) 100%);
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -56,35 +135,29 @@ html {
 
 body {
     margin: 0;
-    padding: 24px 16px 48px;
+    padding: 24px 16px 84px;
     min-height: 100vh;
     color: var(--fc-text-dim);
+    /* Refined concrete: 64px slabs, grouted seams and a lot of speckle. */
     background-color: var(--fc-backdrop);
     background-image:
         radial-gradient(
-            ellipse 90% 60% at 50% -10%,
-            rgba(255, 177, 74, 0.07),
-            transparent 70%
+            ellipse 120% 90% at 50% 35%,
+            rgba(0, 0, 0, 0) 35%,
+            rgba(0, 0, 0, 0.6) 100%
         ),
-        radial-gradient(
-            ellipse 120% 90% at 50% 40%,
-            rgba(0, 0, 0, 0) 40%,
-            rgba(0, 0, 0, 0.55) 100%
-        ),
+        var(--fc-grain-floor),
         repeating-linear-gradient(
             0deg,
-            rgba(255, 255, 255, 0.022) 0 1px,
-            transparent 1px 32px
+            rgba(0, 0, 0, 0.3) 0 2px,
+            rgba(255, 255, 255, 0.03) 2px 3px,
+            transparent 3px 64px
         ),
         repeating-linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.022) 0 1px,
-            transparent 1px 32px
-        ),
-        repeating-linear-gradient(
-            45deg,
-            rgba(255, 255, 255, 0.012) 0 2px,
-            transparent 2px 5px
+            rgba(0, 0, 0, 0.3) 0 2px,
+            rgba(255, 255, 255, 0.03) 2px 3px,
+            transparent 3px 64px
         );
     background-attachment: fixed;
     font-family:
@@ -96,6 +169,37 @@ body {
     font-size: 17px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Belts hauling plates past the edges of the screen, behind the GUI. */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: var(--fc-belt-tile-v) 0 0 / 20px 16px repeat-y;
+    box-shadow:
+        inset 1px 0 0 rgba(0, 0, 0, 0.6),
+        inset -1px 0 0 rgba(0, 0, 0, 0.6);
+    opacity: 0.45;
+    pointer-events: none;
+    animation: fc-belt-down 0.55s linear infinite;
+}
+
+body::before {
+    left: 12px;
+}
+
+body::after {
+    right: 12px;
+}
+
+@keyframes fc-belt-down {
+    to {
+        background-position: 0 16px;
+    }
 }
 
 ::selection {
@@ -119,12 +223,14 @@ body {
     padding: 10px 12px 14px;
     border: 1px solid var(--fc-frame-edge);
     border-radius: var(--fc-radius);
-    background-image: linear-gradient(
-        180deg,
-        var(--fc-frame-top) 0%,
-        var(--fc-frame-mid) 40%,
-        var(--fc-frame-bot) 100%
-    );
+    background-image:
+        var(--fc-grain),
+        linear-gradient(
+            180deg,
+            var(--fc-frame-top) 0%,
+            var(--fc-frame-mid) 40%,
+            var(--fc-frame-bot) 100%
+        );
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.16),
         inset 1px 0 0 rgba(255, 255, 255, 0.06),
@@ -241,11 +347,13 @@ body {
     padding: 16px 18px;
     border: 1px solid #131211;
     border-radius: 3px;
-    background-image: linear-gradient(
-        180deg,
-        var(--fc-deep-top) 0%,
-        var(--fc-deep-bot) 100%
-    );
+    background-image:
+        var(--fc-grain-soft),
+        linear-gradient(
+            180deg,
+            var(--fc-deep-top) 0%,
+            var(--fc-deep-bot) 100%
+        );
     box-shadow:
         inset 0 2px 7px rgba(0, 0, 0, 0.6),
         inset 0 1px 0 rgba(0, 0, 0, 0.7),
@@ -269,10 +377,12 @@ body {
     align-items: center;
     gap: 8px;
     margin: 0 -18px 14px;
-    padding: 5px 18px;
+    padding: 4px 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     border-bottom: 1px solid rgba(0, 0, 0, 0.6);
-    background-image: linear-gradient(180deg, #4a4845 0%, #3b3a38 100%);
+    background-image:
+        var(--fc-grain),
+        linear-gradient(180deg, #4a4741 0%, #3b3934 100%);
     font-weight: 600;
     font-size: 0.98rem;
     letter-spacing: 0.04em;
@@ -281,18 +391,31 @@ body {
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
 }
 
+/* The label marker is a miniature inventory slot holding the section's item. */
 .fc-subheader::before {
     content: "";
     flex: none;
-    width: 8px;
-    height: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.55);
-    background-image: linear-gradient(
+    width: 24px;
+    height: 24px;
+    border: 1px solid #171615;
+    border-radius: 2px;
+    background:
+        var(--fc-item, none) center / 18px 18px no-repeat,
+        linear-gradient(180deg, var(--fc-slot-top) 0%, var(--fc-slot-bot) 100%);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.55),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.fc-subheader:not([class*="fc-i-"])::before {
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(
         180deg,
         var(--fc-orange) 0%,
         var(--fc-orange-deep) 100%
     );
-    box-shadow: 0 0 6px rgba(255, 177, 74, 0.5);
+    box-shadow: 0 0 6px rgba(255, 177, 74, 0.45);
 }
 
 .fc-subheader b,
@@ -320,14 +443,24 @@ body {
     padding: 4px;
     border: 1px solid #171615;
     border-radius: 3px;
-    background-image: linear-gradient(
-        180deg,
-        var(--fc-slot-top) 0%,
-        var(--fc-slot-bot) 100%
-    );
+    background-image:
+        var(--fc-grain-soft),
+        linear-gradient(
+            180deg,
+            var(--fc-slot-top) 0%,
+            var(--fc-slot-bot) 100%
+        );
     box-shadow:
         inset 0 2px 4px rgba(0, 0, 0, 0.5),
         inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.fc-slot:hover {
+    border-color: #7a6a4a;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 177, 74, 0.25),
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
         0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
@@ -366,12 +499,14 @@ body {
     padding: 5px 14px;
     border: 1px solid #171615;
     border-radius: 3px;
-    background-image: linear-gradient(
-        180deg,
-        var(--fc-btn-top) 0%,
-        var(--fc-btn-mid) 45%,
-        var(--fc-btn-bot) 100%
-    );
+    background-image:
+        var(--fc-grain),
+        linear-gradient(
+            180deg,
+            var(--fc-btn-top) 0%,
+            var(--fc-btn-mid) 45%,
+            var(--fc-btn-bot) 100%
+        );
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.2),
         inset 0 -2px 0 rgba(0, 0, 0, 0.4),
@@ -403,11 +538,26 @@ body {
 .music-toggle:active,
 .music-toggle.is-playing {
     transform: translateY(1px);
-    background-image: linear-gradient(180deg, #35342f 0%, #43413c 100%);
+    background-image:
+        var(--fc-grain-soft),
+        linear-gradient(180deg, #33322c 0%, #423f39 100%);
     box-shadow:
         inset 0 2px 5px rgba(0, 0, 0, 0.6),
         0 0 0 rgba(0, 0, 0, 0);
     color: var(--fc-orange);
+}
+
+/* Factorio's confirm button, for the one action that matters on a page. */
+.fc-btn--confirm {
+    border-color: #1c2b13;
+    background-image:
+        var(--fc-grain),
+        linear-gradient(180deg, #74b046 0%, #55893a 45%, #3f6b2c 100%);
+    color: #f4ffe6;
+}
+
+.fc-btn--confirm:hover {
+    border-color: #8fc75e;
 }
 
 .fc-icon-btn,
@@ -451,7 +601,9 @@ body {
     border: 1px solid #171615;
     border-bottom: none;
     border-radius: 4px 4px 0 0;
-    background-image: linear-gradient(180deg, #4f4d49 0%, #3c3b38 100%);
+    background-image:
+        var(--fc-grain),
+        linear-gradient(180deg, #4e4b45 0%, #3c3a35 100%);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.16),
         inset -1px 0 0 rgba(0, 0, 0, 0.3);
@@ -470,11 +622,13 @@ body {
 
 .fc-tab[aria-current="page"] {
     padding-bottom: 8px;
-    background-image: linear-gradient(
-        180deg,
-        var(--fc-deep-top) 0%,
-        var(--fc-deep-bot) 100%
-    );
+    background-image:
+        var(--fc-grain-soft),
+        linear-gradient(
+            180deg,
+            var(--fc-deep-top) 0%,
+            var(--fc-deep-bot) 100%
+        );
     box-shadow:
         inset 0 2px 0 var(--fc-orange-deep),
         inset -1px 0 0 rgba(0, 0, 0, 0.3);
@@ -512,15 +666,6 @@ a {
 a:hover {
     color: #ffd08a;
     border-bottom-color: currentColor;
-}
-
-.fc-btn,
-.fc-tab,
-.home-link,
-.post-back-button,
-.fc-list-box a,
-.fc-grid a {
-    border-bottom-style: solid;
 }
 
 ul {
@@ -616,6 +761,7 @@ li {
 .fc-grid li {
     padding: 0;
     display: flex;
+    min-width: 0;
 }
 
 .fc-grid a {
@@ -623,15 +769,18 @@ li {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     padding: 8px 10px;
     border: 1px solid #171615;
     border-radius: 3px;
-    background-image: linear-gradient(
-        180deg,
-        var(--fc-btn-top) 0%,
-        var(--fc-btn-mid) 45%,
-        var(--fc-btn-bot) 100%
-    );
+    background-image:
+        var(--fc-grain),
+        linear-gradient(
+            180deg,
+            var(--fc-btn-top) 0%,
+            var(--fc-btn-mid) 45%,
+            var(--fc-btn-bot) 100%
+        );
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.18),
         inset 0 -2px 0 rgba(0, 0, 0, 0.4),
@@ -640,9 +789,16 @@ li {
     font-weight: 600;
     text-align: center;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+    min-width: 0;
+    overflow-wrap: break-word;
     transition:
         filter 0.1s ease,
         transform 0.05s ease;
+}
+
+/* Long labels, such as e-mail addresses, need roomier cells. */
+.fc-grid--wide {
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 }
 
 .fc-grid a:hover {
@@ -671,42 +827,129 @@ li {
     margin-top: 12px;
     border: 1px solid #171615;
     border-radius: 3px;
-    background-color: #35342f;
-    background-image:
-        repeating-linear-gradient(
-            115deg,
-            rgba(255, 255, 255, 0.22) 0 2px,
-            rgba(255, 255, 255, 0.06) 2px 4px,
-            rgba(0, 0, 0, 0.45) 4px 6px,
-            rgba(0, 0, 0, 0) 6px 13.245px
-        ),
-        linear-gradient(
-            180deg,
-            #c9a227 0 3px,
-            #57544c 3px 5px,
-            #3c3b36 5px calc(100% - 5px),
-            #57544c calc(100% - 5px) calc(100% - 3px),
-            #c9a227 calc(100% - 3px) 100%
-        );
-    background-repeat: repeat-x, repeat;
-    background-size:
-        100% calc(100% - 10px),
-        100% 100%;
-    background-position:
-        0 5px,
-        0 0;
+    background-color: #33322d;
+    background-image: var(--fc-belt-tile);
+    background-repeat: repeat-x;
+    background-size: 16px 100%;
     box-shadow:
-        inset 0 0 10px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    animation: fc-belt-run 0.85s linear infinite;
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    animation: fc-belt-run 0.55s linear infinite;
 }
 
 @keyframes fc-belt-run {
     to {
-        background-position:
-            26.49px 5px,
-            0 0;
+        background-position: 16px 0;
     }
+}
+
+/* ==========================================================================
+   Quickbar, parked at the bottom of the screen like the game's HUD
+   ========================================================================== */
+
+.fc-quickbar {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    z-index: 30;
+    transform: translateX(-50%);
+    display: flex;
+    direction: ltr;
+    gap: 2px;
+    padding: 4px 5px 6px;
+    border: 1px solid var(--fc-frame-edge);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    background-image:
+        var(--fc-grain),
+        linear-gradient(
+            180deg,
+            var(--fc-frame-top) 0%,
+            var(--fc-frame-mid) 60%,
+            var(--fc-frame-bot) 100%
+        );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 -3px 16px rgba(0, 0, 0, 0.55);
+}
+
+.fc-quickbar-slot {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #171615;
+    border-radius: 2px;
+    background:
+        var(--fc-item, none) center / 26px 26px no-repeat,
+        var(--fc-grain-soft),
+        linear-gradient(180deg, var(--fc-slot-top) 0%, var(--fc-slot-bot) 100%);
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.6),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.fc-quickbar-slot:hover {
+    border-color: #8a7748;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 177, 74, 0.3),
+        inset 0 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Stack size, bottom-right of the slot, exactly where the game prints it. */
+.fc-quickbar-slot[data-count]::before {
+    content: attr(data-count);
+    position: absolute;
+    right: 2px;
+    bottom: -1px;
+    color: var(--fc-text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    text-shadow:
+        0 1px 2px #000,
+        0 0 3px #000;
+}
+
+/* ==========================================================================
+   Tooltips
+   ========================================================================== */
+
+[data-tip] {
+    position: relative;
+}
+
+[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    z-index: 40;
+    transform: translateX(-50%);
+    padding: 5px 11px;
+    border: 1px solid #13120f;
+    border-top: 2px solid var(--fc-orange-deep);
+    border-radius: 2px;
+    background-image:
+        var(--fc-grain-soft),
+        linear-gradient(180deg, #302e2a 0%, #262420 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 4px 14px rgba(0, 0, 0, 0.65);
+    color: var(--fc-text);
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.08s ease 0.18s;
+}
+
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+    opacity: 1;
 }
 
 /* ==========================================================================
@@ -758,12 +1001,31 @@ li {
     }
 }
 
+/* The game spins a gear while it loads, so this does too. */
 .loading {
-    padding: 6px 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 0 4px;
     color: var(--fc-text-mute);
     font-size: 0.95rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+}
+
+.loading::before {
+    content: "";
+    flex: none;
+    width: 20px;
+    height: 20px;
+    background: var(--fc-icon-gear) center / contain no-repeat;
+    animation: fc-gear-spin 2.6s linear infinite;
+}
+
+@keyframes fc-gear-spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .error {
@@ -1090,6 +1352,21 @@ li {
    Responsive
    ========================================================================== */
 
+@media (max-width: 900px) {
+    /* No room for scenery on a narrow screen. */
+    body::before,
+    body::after {
+        display: none;
+    }
+}
+
+@media (max-width: 760px) {
+    /* The quickbar would cover half the screen on a phone. */
+    .fc-quickbar {
+        display: none;
+    }
+}
+
 @media (max-width: 640px) {
     body {
         padding: 12px 8px 32px;
@@ -1158,9 +1435,12 @@ li {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    body::before,
+    body::after,
     .fc-belt,
     .fc-bar--busy .fc-bar-fill,
-    .now-playing::before {
+    .now-playing::before,
+    .loading::before {
         animation: none;
     }
 }
