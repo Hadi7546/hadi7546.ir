@@ -27,8 +27,8 @@ async function fetchLastTrack() {
 
     const isNowPlaying = track["@attr"] && track["@attr"].nowplaying === "true";
     const playStatus = isNowPlaying
-      ? "Now playing"
-      : formatDate(new Date(track.date.uts * 1000));
+      ? '<div class="play-date now-playing">Now playing</div>'
+      : `<div class="play-date bright-date">${formatDate(new Date(track.date.uts * 1000))}</div>`;
 
     trackElement.innerHTML = `
             <div class="track-info">
@@ -37,7 +37,7 @@ async function fetchLastTrack() {
                     <a class="track-name" href="${track.url}" target="_blank" title="${track.name}">${track.name}</a>
                     <div class="artist-name" title="by ${track.artist["#text"]}">by ${track.artist["#text"]}</div>
                     <div class="album-name" title="from ${track.album["#text"]}">from ${track.album["#text"]}</div>
-                    <div class="play-date bright-date">${playStatus}</div>
+                    ${playStatus}
                 </div>
             </div>
         `;
@@ -101,10 +101,15 @@ async function fetchLastTypeTest() {
       test.mode === "time"
         ? `${test.mode} ${test.testDuration}s`
         : test.mode + test.mode2;
+    // Scaled against 200 WPM so the bar reads like a machine's throughput gauge.
+    const wpmRatio = Math.max(0, Math.min(1, test.wpm / 200));
     testElement.innerHTML = `
       <div class="test-info">
         <div class="test-details">
           <div class="test-wpm">${test.wpm} WPM</div>
+          <div class="fc-bar fc-bar--green test-bar">
+            <div class="fc-bar-fill" style="width: ${(wpmRatio * 100).toFixed(1)}%"></div>
+          </div>
           <div class="test-accuracy">${test.acc}% accuracy</div>
           <div class="test-mode">mode: ${modeDisplay}</div>
           <div class="test-date bright-date">${date}</div>
@@ -123,17 +128,29 @@ function setupMusicPlayer() {
   const music = document.getElementById("background-music");
 
   if (musicToggle && music) {
+    const playIcon =
+      '<svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18"><path d="M8 5v14l11-7z"/></svg>';
+    const pauseIcon =
+      '<svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+    const render = () => {
+      const playing = !music.paused;
+      musicToggle.innerHTML = playing ? pauseIcon : playIcon;
+      musicToggle.classList.toggle("is-playing", playing);
+      musicToggle.setAttribute("aria-pressed", String(playing));
+    };
+
     musicToggle.addEventListener("click", () => {
       if (music.paused) {
         music.play();
-        musicToggle.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
       } else {
         music.pause();
-        musicToggle.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18"><path d="M8 5v14l11-7z"/></svg>';
       }
     });
+
+    music.addEventListener("play", render);
+    music.addEventListener("pause", render);
+    render();
   }
 }
 
